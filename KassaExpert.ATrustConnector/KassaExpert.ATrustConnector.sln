@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KassaExpert.ATrustConnector.Lib", "KassaExpert.ATrustConnector.Lib\KassaExpert.ATrustConnector.Lib.csproj", "{5B5AC4E0-D367-48EC-AFFD-8D293EF11DB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KassaExpert.ATrustConnector.LibTest", "KassaExpert.ATrustConnector.LibTest\KassaExpert.ATrustConnector.LibTest.csproj", "{D23C15EF-C137-42E1-BB77-1C59742A6A34}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B5AC4E0-D367-48EC-AFFD-8D293EF11DB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5AC4E0-D367-48EC-AFFD-8D293EF11DB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5AC4E0-D367-48EC-AFFD-8D293EF11DB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5AC4E0-D367-48EC-AFFD-8D293EF11DB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D23C15EF-C137-42E1-BB77-1C59742A6A34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D23C15EF-C137-42E1-BB77-1C59742A6A34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D23C15EF-C137-42E1-BB77-1C59742A6A34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D23C15EF-C137-42E1-BB77-1C59742A6A34}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0670DE6-64D9-4AA7-9E6A-B97932747D93}
+	EndGlobalSection
+EndGlobal

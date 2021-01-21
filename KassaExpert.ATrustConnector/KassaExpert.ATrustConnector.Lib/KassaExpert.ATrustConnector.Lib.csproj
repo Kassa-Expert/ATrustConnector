@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Mauracher Simon, Faustmann Christian</Authors>
+    <Company>Kassa.Expert</Company>
+    <Description>Lt. Dokumentation Version 2.2 ab 13.02.2020</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <PackageId>KassaExpert.ATrustConnector</PackageId>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/Kassa-Expert</PackageProjectUrl>
+    <Product>KassaExpert.ATrustConnector</Product>
+    <RepositoryUrl>https://github.com/Kassa-Expert/ATrustConnector</RepositoryUrl>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>2.2.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="KassaExpert.ATrustConnector.LibTest" />
+    <!-- [assembly: InternalsVisibleTo("KassaExpert.ATrustConnector.LibTest")] -->
+  </ItemGroup>
+</Project>
