@@ -38,6 +38,7 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
             var response = await _client.ExecuteAsync<SessionResponse>(request);
 
+            //TODO: calc expiration-date (1h from request, max to midnight)
             if (!response.IsSuccessful)
             {
                 return new ResponseDto.Response<Session>(false, null, response.StatusDescription);
