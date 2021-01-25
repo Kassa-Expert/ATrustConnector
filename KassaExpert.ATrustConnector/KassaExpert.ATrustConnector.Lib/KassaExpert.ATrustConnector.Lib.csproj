@@ -28,4 +28,9 @@
     <InternalsVisibleTo Include="KassaExpert.ATrustConnector.LibTest" />
     <!-- [assembly: InternalsVisibleTo("KassaExpert.ATrustConnector.LibTest")] -->
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Enum.Ext" Version="1.0.6" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
+  </ItemGroup>
 </Project>
