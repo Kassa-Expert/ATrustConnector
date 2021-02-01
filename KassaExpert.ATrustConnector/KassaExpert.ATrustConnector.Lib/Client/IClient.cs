@@ -1,5 +1,7 @@
 ﻿using KassaExpert.ATrustConnector.Lib.Client.Impl;
+using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Credentials.Impl;
+using KassaExpert.Util.Lib.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,5 +23,11 @@ namespace KassaExpert.ATrustConnector.Lib.Client
         Task<IResponse> DeleteSession(string sessionId);
 
         #endregion SESSION
+
+        #region SIGN
+
+        Task<IResponse<JwsItem>> Sign(MachineReadableCode data, ICredentials credentials);
+
+        #endregion SIGN
     }
 }

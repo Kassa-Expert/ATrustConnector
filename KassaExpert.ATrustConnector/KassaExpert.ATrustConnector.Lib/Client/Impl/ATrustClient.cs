@@ -1,7 +1,11 @@
 ﻿using KassaExpert.ATrustConnector.Lib.Client.Impl.Request;
 using KassaExpert.ATrustConnector.Lib.Client.Impl.Response;
+using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Credentials.Impl;
+using KassaExpert.Util.Lib.Dto;
 using RestSharp;
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace KassaExpert.ATrustConnector.Lib.Client.Impl
@@ -24,6 +28,8 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
                 _client = new RestClient("https://www.a-trust.at/asignrkonline/v2");
             }
         }
+
+        #region SESSION
 
         public async Task<IResponse<Session>> CreateSession(string username, string password)
         {
@@ -62,5 +68,41 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
             return new ResponseDto.Response(true, null);
         }
+
+        #endregion SESSION
+
+        #region SIGN
+
+        public async Task<IResponse<JwsItem>> Sign(MachineReadableCode data, ICredentials credentials)
+        {
+            if (data.Signature is null)
+            {
+                return new ResponseDto.Response<JwsItem>(false, null, "MachineReadableCode should not have a signature");
+            }
+
+            if (credentials is Session session)
+            {
+                return await SignWithSession(data, session);
+            }
+
+            if (credentials is User user)
+            {
+                return await SignWithUser(data, user);
+            }
+
+            return new ResponseDto.Response<JwsItem>(false, null, "Credentials are not of type User or Session, create with ICredentials");
+        }
+
+        private async Task<IResponse<JwsItem>> SignWithSession(MachineReadableCode data, Session credentials)
+        {
+            return null;
+        }
+
+        private async Task<IResponse<JwsItem>> SignWithUser(MachineReadableCode data, User credentials)
+        {
+            return null;
+        }
+
+        #endregion SIGN
     }
 }
