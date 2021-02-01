@@ -2,6 +2,7 @@
 using KassaExpert.ATrustConnector.Lib.Client.Impl.Response;
 using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Credentials.Impl;
+using KassaExpert.ATrustConnector.Lib.ResponseDto;
 using KassaExpert.Util.Lib.Dto;
 using RestSharp;
 using System;
@@ -47,10 +48,10 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
             //TODO: calc expiration-date (1h from request, max to midnight)
             if (!response.IsSuccessful)
             {
-                return new ResponseDto.Response<Session>(false, null, response.StatusDescription);
+                return new Response<Session>(false, null, response.StatusDescription);
             }
 
-            return new ResponseDto.Response<Session>(true, new Session(response.Data.sessionid, response.Data.sessionkey), null);
+            return new Response<Session>(true, new Session(response.Data.sessionid, response.Data.sessionkey), null);
         }
 
         public async Task<IResponse> DeleteSession(string sessionId)
@@ -77,7 +78,7 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
         {
             if (data.Signature is null)
             {
-                return new ResponseDto.Response<JwsItem>(false, null, "MachineReadableCode should not have a signature");
+                return new Response<JwsItem>(false, null, "MachineReadableCode should not have a signature");
             }
 
             if (credentials is Session session)
@@ -90,7 +91,7 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
                 return await SignWithUser(data, user);
             }
 
-            return new ResponseDto.Response<JwsItem>(false, null, "Credentials are not of type User or Session, create with ICredentials");
+            return new Response<JwsItem>(false, null, "Credentials are not of type User or Session, create with ICredentials");
         }
 
         private async Task<IResponse<JwsItem>> SignWithSession(MachineReadableCode data, Session credentials)
@@ -105,10 +106,10 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
             if (!response.IsSuccessful)
             {
-                return new ResponseDto.Response<JwsItem>(false, null, response.StatusDescription);
+                return new Response<JwsItem>(false, null, response.StatusDescription);
             }
 
-            return new ResponseDto.Response<JwsItem>(true, new JwsItem(response.Data.result), null);
+            return new Response<JwsItem>(true, new JwsItem(response.Data.result), null);
         }
 
         private async Task<IResponse<JwsItem>> SignWithUser(MachineReadableCode data, User credentials)
@@ -123,12 +124,46 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
             if (!response.IsSuccessful)
             {
-                return new ResponseDto.Response<JwsItem>(false, null, response.StatusDescription);
+                return new Response<JwsItem>(false, null, response.StatusDescription);
             }
 
-            return new ResponseDto.Response<JwsItem>(true, new JwsItem(response.Data.result), null);
+            return new Response<JwsItem>(true, new JwsItem(response.Data.result), null);
         }
 
         #endregion SIGN
+
+        public async Task<IResponse<CertificateDto>> GetCertificate(string username)
+        {
+            var request = new RestRequest("{Benutzername}/Certificate", Method.GET);
+
+            request.AddUrlSegment("Benutzername", username);
+
+            var response = await _client.ExecuteAsync<CertificateResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                return new Response<CertificateDto>(false, null, response.StatusDescription);
+            }
+
+            var returnDto = new CertificateDto(Convert.FromBase64String(response.Data.Signaturzertifikat), response.Data.ZertifikatsseriennummerHex);
+
+            return new Response<CertificateDto>(true, returnDto, null);
+        }
+
+        public async Task<IResponse<string>> GetZdaId(string username)
+        {
+            var request = new RestRequest("{Benutzername}/ZDA", Method.GET);
+
+            request.AddUrlSegment("Benutzername", username);
+
+            var response = await _client.ExecuteAsync<ZdaResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                return new Response<string>(false, null, response.StatusDescription);
+            }
+
+            return new Response<string>(true, response.Data.zdaid, null);
+        }
     }
 }

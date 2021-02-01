@@ -1,6 +1,7 @@
 ﻿using KassaExpert.ATrustConnector.Lib.Client.Impl;
 using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Credentials.Impl;
+using KassaExpert.ATrustConnector.Lib.ResponseDto;
 using KassaExpert.Util.Lib.Dto;
 using System;
 using System.Collections.Generic;
@@ -29,5 +30,9 @@ namespace KassaExpert.ATrustConnector.Lib.Client
         Task<IResponse<JwsItem>> Sign(MachineReadableCode data, ICredentials credentials);
 
         #endregion SIGN
+
+        Task<IResponse<CertificateDto>> GetCertificate(string username);
+
+        Task<IResponse<string>> GetZdaId(string username);
     }
 }
