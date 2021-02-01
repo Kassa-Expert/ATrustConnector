@@ -95,12 +95,38 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
         private async Task<IResponse<JwsItem>> SignWithSession(MachineReadableCode data, Session credentials)
         {
-            return null;
+            var request = new RestRequest("Session/{sessionId}/Sign/JWS", Method.POST, DataFormat.Json);
+
+            request.AddUrlSegment("sessionId", credentials.SessionId);
+
+            request.AddJsonBody(new SignWithSessionRequest(credentials.SessionKey, data.GetCode()));
+
+            var response = await _client.ExecuteAsync<SignWithSessionResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                return new ResponseDto.Response<JwsItem>(false, null, response.StatusDescription);
+            }
+
+            return new ResponseDto.Response<JwsItem>(true, new JwsItem(response.Data.result), null);
         }
 
         private async Task<IResponse<JwsItem>> SignWithUser(MachineReadableCode data, User credentials)
         {
-            return null;
+            var request = new RestRequest("{Benutzername}/Sign/JWS", Method.PUT, DataFormat.Json);
+
+            request.AddUrlSegment("Benutzername", credentials.Username);
+
+            request.AddJsonBody(new SignWithUserRequest(credentials.Password, data.GetCode()));
+
+            var response = await _client.ExecuteAsync<SignWithUserResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                return new ResponseDto.Response<JwsItem>(false, null, response.StatusDescription);
+            }
+
+            return new ResponseDto.Response<JwsItem>(true, new JwsItem(response.Data.result), null);
         }
 
         #endregion SIGN

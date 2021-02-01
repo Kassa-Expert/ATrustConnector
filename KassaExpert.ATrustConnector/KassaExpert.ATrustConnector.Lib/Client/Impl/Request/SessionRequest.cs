@@ -1,6 +1,6 @@
 ﻿namespace KassaExpert.ATrustConnector.Lib.Client.Impl.Request
 {
-    internal class SessionRequest
+    internal sealed class SessionRequest
     {
         public string password { get; set; }
     }
