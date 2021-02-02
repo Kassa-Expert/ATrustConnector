@@ -165,5 +165,28 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
             return new Response<string>(true, response.Data.zdaid, null);
         }
+
+        public async Task<IResponse> ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            var request = new RestRequest("{Benutzername}/Password", Method.POST, DataFormat.Json);
+
+            request.AddUrlSegment("Benutzername", username);
+
+            request.AddJsonBody(new ChangePasswordRequest(oldPassword, newPassword));
+
+            var response = await _client.ExecuteAsync<ChangePasswordResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                return new ResponseDto.Response(false, response.StatusDescription);
+            }
+
+            if (!response.Data.result)
+            {
+                return new ResponseDto.Response(false, "Passwort konnte nicht geändert werden");
+            }
+
+            return new ResponseDto.Response(true, null);
+        }
     }
 }

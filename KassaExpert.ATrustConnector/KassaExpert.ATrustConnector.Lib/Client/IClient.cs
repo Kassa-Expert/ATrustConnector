@@ -34,5 +34,7 @@ namespace KassaExpert.ATrustConnector.Lib.Client
         Task<IResponse<CertificateDto>> GetCertificate(string username);
 
         Task<IResponse<string>> GetZdaId(string username);
+
+        Task<IResponse> ChangePassword(string username, string oldPassword, string newPassword);
     }
 }
