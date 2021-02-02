@@ -1,6 +1,7 @@
 ﻿using KassaExpert.ATrustConnector.Lib.Client.Impl;
 using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Credentials.Impl;
+using KassaExpert.ATrustConnector.Lib.Enum;
 using KassaExpert.ATrustConnector.Lib.ResponseDto;
 using KassaExpert.Util.Lib.Dto;
 using System;
@@ -36,5 +37,7 @@ namespace KassaExpert.ATrustConnector.Lib.Client
         Task<IResponse<string>> GetZdaId(string username);
 
         Task<IResponse> ChangePassword(string username, string oldPassword, string newPassword);
+
+        Task<IResponse<CreateUserCertificateDto>> CreatePartnerCertficate(string partner_user, string partner_password, string mail, PartnerCertificateClassification classificationType, string classificationValue, PartnerCertificateProduct product);
     }
 }

@@ -2,6 +2,7 @@
 using KassaExpert.ATrustConnector.Lib.Client.Impl.Response;
 using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Credentials.Impl;
+using KassaExpert.ATrustConnector.Lib.Enum;
 using KassaExpert.ATrustConnector.Lib.ResponseDto;
 using KassaExpert.Util.Lib.Dto;
 using RestSharp;
@@ -187,6 +188,24 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
             }
 
             return new ResponseDto.Response(true, null);
+        }
+
+        public async Task<IResponse<CreateUserCertificateDto>> CreatePartnerCertficate(string partner_user, string partner_password, string mail, PartnerCertificateClassification classificationType, string classificationValue, PartnerCertificateProduct product)
+        {
+            var request = new RestRequest("{partner_benutzername}/Password", Method.POST, DataFormat.Json);
+
+            request.AddUrlSegment("partner_benutzername", partner_user);
+
+            request.AddJsonBody(new PartnerCertificateRequest(partner_password, mail, classificationType, classificationValue, product));
+
+            var response = await _client.ExecuteAsync<PartnerCertificateResponse>(request);
+
+            if (!response.IsSuccessful)
+            {
+                return new Response<CreateUserCertificateDto>(false, null, response.StatusDescription);
+            }
+
+            return new Response<CreateUserCertificateDto>(true, new CreateUserCertificateDto(response.Data.username, response.Data.password, Convert.FromBase64String(response.Data.Signaturzertifikat), response.Data.ZertifikatsseriennummerHex), null);
         }
     }
 }
