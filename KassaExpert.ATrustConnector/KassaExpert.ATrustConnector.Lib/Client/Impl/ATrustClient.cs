@@ -52,7 +52,7 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
                 return new Response<Session>(false, null, response.StatusDescription);
             }
 
-            return new Response<Session>(true, new Session(response.Data.sessionid, response.Data.sessionkey), null);
+            return new Response<Session>(true, new Session(response.Data.sessionid, response.Data.sessionkey, username, password), null);
         }
 
         public async Task<IResponse> DeleteSession(string sessionId)
