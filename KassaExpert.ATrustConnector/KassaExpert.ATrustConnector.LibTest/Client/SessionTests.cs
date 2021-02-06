@@ -32,6 +32,10 @@ namespace KassaExpert.ATrustConnector.LibTest.Client
             session.Payload.Should().NotBeNull();
             session.Payload!.SessionId.Should().NotBeNull();
             session.Payload!.SessionKey.Should().NotBeNull();
+
+            var response = await _client.DeleteSession(session.Payload.SessionId);
+
+            response.IsSuccessful.Should().BeTrue();
         }
     }
 }

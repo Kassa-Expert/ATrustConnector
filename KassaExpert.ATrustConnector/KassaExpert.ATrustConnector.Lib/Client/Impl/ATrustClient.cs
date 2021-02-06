@@ -192,9 +192,9 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
         public async Task<IResponse<CreateUserCertificateDto>> CreatePartnerCertficate(string partner_user, string partner_password, string mail, PartnerCertificateClassification classificationType, string classificationValue, PartnerCertificateProduct product)
         {
-            var request = new RestRequest("{partner_benutzername}/Password", Method.POST, DataFormat.Json);
+            var request = new RestRequest("{partner_benutzername}/Account", Method.POST, DataFormat.Json);
 
-            request.AddUrlSegment("partner_benutzername", partner_user);
+            request.AddUrlSegment("partner_benutzername", partner_user.Replace(" ", string.Empty));
 
             request.AddJsonBody(new PartnerCertificateRequest(partner_password, mail, classificationType, classificationValue, product));
 
