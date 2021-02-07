@@ -106,6 +106,12 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
             if (!response.IsSuccessful)
             {
+                //SESSION CAN BE INACTIVE -> SIGN WITH USER/PASSWORD
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return await SignWithUser(data, credentials);
+                }
+
                 return new Response<JwsItem>(false, null, response.StatusDescription);
             }
 

@@ -41,16 +41,43 @@ namespace KassaExpert.ATrustConnector.LibTest.Client
         [Test]
         public async Task TestSignature_Session()
         {
-            var session = await _client.CreateSession("u123456789", "123456789");
+            var sessionResponse = await _client.CreateSession("u123456789", "123456789");
 
             var firstBeleg = new MachineReadableCode(TrustProvider.A_Trust, "BOX1", "1", DateTime.UtcNow, 0m, 0m, 0m, 0m, 0m, "00==", _certHexSerial, "prev===");
 
-            var signature = await _client.Sign(firstBeleg, session.Payload);
+            var signature = await _client.Sign(firstBeleg, sessionResponse.Payload);
 
             signature.IsSuccessful.Should().BeTrue(because: signature.ErrorMessage);
 
             signature.Payload.Should().NotBeNull();
             signature.Payload.Signature.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public async Task TestSignature_WrongSession()
+        {
+            var session = ICredentials.CreateBySessionIdKey("sessionid", "sessionkey", "u123456789", "123456789");
+
+            var firstBeleg = new MachineReadableCode(TrustProvider.A_Trust, "BOX1", "1", DateTime.UtcNow, 0m, 0m, 0m, 0m, 0m, "00==", _certHexSerial, "prev===");
+
+            var signature = await _client.Sign(firstBeleg, session);
+
+            signature.IsSuccessful.Should().BeTrue(because: signature.ErrorMessage);
+
+            signature.Payload.Should().NotBeNull();
+            signature.Payload.Signature.Should().NotBeNullOrEmpty();
+        }
+
+        [Test]
+        public async Task TestSignature_AlreadySigned()
+        {
+            var session = ICredentials.CreateBySessionIdKey("sessionid", "sessionkey", "u123456789", "123456789");
+
+            var firstBeleg = new MachineReadableCode(TrustProvider.A_Trust, "BOX1", "1", DateTime.UtcNow, 0m, 0m, 0m, 0m, 0m, "00==", _certHexSerial, "prev===", "SIG");
+
+            var signature = await _client.Sign(firstBeleg, session);
+
+            signature.IsSuccessful.Should().BeFalse();
         }
     }
 }

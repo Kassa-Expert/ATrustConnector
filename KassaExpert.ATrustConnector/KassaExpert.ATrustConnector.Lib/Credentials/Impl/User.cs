@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace KassaExpert.ATrustConnector.Lib.Credentials.Impl
+﻿namespace KassaExpert.ATrustConnector.Lib.Credentials.Impl
 {
-    internal sealed class User : ICredentials
+    public class User : ICredentials
     {
         internal User(string username, string password)
         {
@@ -12,8 +8,8 @@ namespace KassaExpert.ATrustConnector.Lib.Credentials.Impl
             Password = password;
         }
 
-        public string Username { get; }
+        internal string Username { get; }
 
-        public string Password { get; }
+        internal string Password { get; }
     }
 }
