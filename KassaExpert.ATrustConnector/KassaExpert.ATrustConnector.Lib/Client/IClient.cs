@@ -1,12 +1,9 @@
 ﻿using KassaExpert.ATrustConnector.Lib.Client.Impl;
-using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Credentials.Impl;
+using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Enum;
 using KassaExpert.ATrustConnector.Lib.ResponseDto;
 using KassaExpert.Util.Lib.Dto;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KassaExpert.ATrustConnector.Lib.Client

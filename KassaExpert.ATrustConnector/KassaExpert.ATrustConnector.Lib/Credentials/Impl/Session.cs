@@ -6,6 +6,8 @@
         {
             SessionId = sessionId;
             SessionKey = sessionKey;
+            Username = username;
+            Password = password;
         }
 
         public string SessionId { get; }

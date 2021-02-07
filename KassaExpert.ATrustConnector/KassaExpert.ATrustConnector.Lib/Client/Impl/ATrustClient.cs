@@ -1,14 +1,13 @@
 ﻿using KassaExpert.ATrustConnector.Lib.Client.Impl.Request;
 using KassaExpert.ATrustConnector.Lib.Client.Impl.Response;
-using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Credentials.Impl;
+using KassaExpert.ATrustConnector.Lib.Credentials;
 using KassaExpert.ATrustConnector.Lib.Enum;
 using KassaExpert.ATrustConnector.Lib.ResponseDto;
 using KassaExpert.Util.Lib.Dto;
 using RestSharp;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System;
 
 namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 {
@@ -77,7 +76,7 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
         public async Task<IResponse<JwsItem>> Sign(MachineReadableCode data, ICredentials credentials)
         {
-            if (data.Signature is null)
+            if (data.Signature is not null)
             {
                 return new Response<JwsItem>(false, null, "MachineReadableCode should not have a signature");
             }
@@ -115,7 +114,7 @@ namespace KassaExpert.ATrustConnector.Lib.Client.Impl
 
         private async Task<IResponse<JwsItem>> SignWithUser(MachineReadableCode data, User credentials)
         {
-            var request = new RestRequest("{Benutzername}/Sign/JWS", Method.PUT, DataFormat.Json);
+            var request = new RestRequest("{Benutzername}/Sign/JWS", Method.POST, DataFormat.Json);
 
             request.AddUrlSegment("Benutzername", credentials.Username);
 
